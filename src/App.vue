@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <!-- <TemGoods></TemGoods> -->
-    <!-- <DownLoad href="Welcome to Your Vue.js App"/> -->
-    <tem-business></tem-business>
+    <tem-goods v-if="template === 'goods'"></tem-goods>
+    <down-load v-if="template === 'down'"></down-load>
+    <tem-business v-if="template === 'business'"></tem-business>
   </div>
 </template>
 
@@ -17,6 +17,11 @@ export default {
     TemGoods,
     TemBusiness,
     DownLoad
+  },
+  data() {
+    return {
+      template: 'business'
+    }
   }
 }
 </script>

@@ -150,7 +150,6 @@ export default {
   methods: {
     tabChange(e) {
       let k = e.target.id.match(/\d/)[0];
-      console.log(k);
       if (k === null) return;
       k = parseInt(k);
       if (this.tabActive === k) return;
