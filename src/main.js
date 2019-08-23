@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import 'amfe-flexible'
+import './style/index.css'
 
 Vue.config.productionTip = false
 

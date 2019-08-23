@@ -1,28 +1,25 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!-- <TemGoods></TemGoods> -->
+    <!-- <DownLoad href="Welcome to Your Vue.js App"/> -->
+    <tem-business></tem-business>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TemGoods from './components/TemGoods.vue'
+import TemBusiness from './components/TemBusiness.vue'
+import DownLoad from './components/DownLoad.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    TemGoods,
+    TemBusiness,
+    DownLoad
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
