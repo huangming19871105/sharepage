@@ -126,26 +126,29 @@
         <goods-item  v-if="tabActive === 2"></goods-item>
       </div>
     </div>
-    <div class="p-section p-section-btn-fix">
-      <button class="m-btn m-btn-block m-btn-radius-lg m-btn-bg1">立即邀约</button>
-    </div>
+    <button-link v-on="$listeners"></button-link>
   </div>
 </template>
 
 <script>
 const GoodsItem = () => import("./GoodsItem")
+const ButtonLink = () => import("./ButtonLink")
 export default {
   name: "temBusiness",
   components: {
-    GoodsItem
+    GoodsItem,
+    ButtonLink
   },
   props: {
-    href: String
+    params: Object
   },
   data() {
     return {
       tabActive: 0
     };
+  },
+  created() {
+    console.log(this.params)
   },
   methods: {
     tabChange(e) {

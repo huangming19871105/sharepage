@@ -35,9 +35,7 @@
 <script>
 export default {
   name: "goodsItem",
-  props: {
-    href: String
-  }
+  
 };
 </script>
 

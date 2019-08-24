@@ -60,18 +60,23 @@
     <div class="p-section m-m15 p-section-content">
       <p>通透运动款织带，材质原料成分：高F尼龙 渔丝 氨纶 功能特色：透气防滑，柔软舒适，鱼丝光泽。适用于运动系列服饰。</p>
     </div>
-    <div class="p-section p-section-btn-fix">
-      <button class="m-btn m-btn-block m-btn-radius-lg m-btn-bg1">立即邀约</button>
-    </div>
+    <button-link v-on="$listeners"></button-link>
   </div>
 </template>
 
 <script>
+const ButtonLink = () => import("./ButtonLink")
 export default {
   name: "temGoods",
   props: {
-    href: String
-  }
+    params: Object
+  },
+  components: {
+    ButtonLink
+  },
+  created() {
+    console.log(this.params)
+  },
 };
 </script>
 
