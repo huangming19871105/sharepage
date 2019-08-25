@@ -7,7 +7,18 @@
     outline: none;
 }
 
+::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+html, body{
+    height: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
 body {
+    position: relative;
     margin: 0 auto;
     max-width: 540PX;
     background: #f6f6f6;
@@ -50,6 +61,17 @@ li,
 dt,
 dd {
     list-style: none;
+}
+
+.p-container{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    z-index: 1;
 }
 
 .p-back {

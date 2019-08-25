@@ -28,6 +28,9 @@ export default {
   created() {
     this.initAction();
   },
+  mounted() {
+    this.$el.classList.add("p-container")
+  },
   beforeDestroy() {
     sessionStorage.removeItem("action");
   },
