@@ -2,7 +2,14 @@
   <div class="p-wrap">
     <div class="p-head-media">
       <div class="h-media">
-        <i class="m-icon m-icon-play"></i>
+        <i class="m-icon m-icon-play" @click="videoPlay"></i>
+        <video ref="v">
+          <source
+            src="../assets/movie.mp4"
+            type="video/mp4"
+          />
+        </video>
+        <!-- <video autoplay controls><source src="../assets/movie.mp4"  type="video/mp4"></video> -->
       </div>
       <div class="h-tags">
         <span class="m-tag m-tag-danger">
@@ -65,7 +72,7 @@
 </template>
 
 <script>
-const ButtonLink = () => import("./ButtonLink")
+const ButtonLink = () => import("./ButtonLink");
 export default {
   name: "temGoods",
   props: {
@@ -75,14 +82,19 @@ export default {
     ButtonLink
   },
   created() {
-    console.log(this.params)
+    console.log(this.params);
   },
+  methods: {
+    videoPlay() {
+      this.$refs.v.play();
+    }
+  }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.p-wrap{
+.p-wrap {
   padding-bottom: 125px;
 }
 .h-media {
@@ -92,17 +104,20 @@ export default {
   background: #f0f0f0 url("../assets/img-defualt.png") no-repeat center;
   background-size: 40% auto;
 }
-.h-media img {
+.h-media img,
+.h-media video {
   display: block;
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
-.h-media .m-icon-play{
+.h-media .m-icon-play {
   position: absolute;
   left: 50%;
   top: 50%;
   margin-left: -62px;
   margin-top: -62px;
+  z-index: 100;
 }
 .h-tags {
   display: inline-block;
@@ -115,7 +130,7 @@ export default {
 .h-tags .m-tag {
   margin: 0 20px;
 }
-.p-section-content{
+.p-section-content {
   padding: 25px 70px;
   font-size: 30px;
   line-height: 1.7;

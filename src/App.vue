@@ -27,6 +27,7 @@ export default {
   },
   created() {
     this.initAction();
+    this.$hideLoading();
   },
   mounted() {
     this.$el.classList.add("p-container")

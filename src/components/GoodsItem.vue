@@ -3,7 +3,7 @@
     <ul class="m-obj-lists">
       <li class="m-obj-item">
         <div class="m-item-media">
-            <div class="m-item-img m-img-bg"></div>
+            <div class="m-item-img m-img-bg"> </div>
         </div>
         <div class="m-item-body">
             <div class="m-item-head">鱼丝镂空运动带</div>
