@@ -22,23 +22,24 @@ export default {
     return {
       params: {},
       action: "",
-      downUrl: ""
+      downUrl: "http://zhxt.eastfair.com/79814008577"
     };
   },
   created() {
     this.initAction();
-    this.$hideLoading();
   },
   mounted() {
-    this.$el.classList.add("p-container")
+    this.$el.classList.add("p-container");
   },
   beforeDestroy() {
     sessionStorage.removeItem("action");
   },
   methods: {
     initAction() {
+      let urlStrs = location.search || location.hash;
+      let urlParasm = urlStrs.split("?");
+      let urlParamsStrs = urlParasm.length == 1 ? urlParasm[0] : urlParasm[1];
       let action = sessionStorage.getItem("action") || "";
-      let urlParamsStrs = location.search.replace("?", "");
       this.params = this.parser(urlParamsStrs);
       if (action !== "") {
         this.action = action;

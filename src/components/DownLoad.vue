@@ -12,6 +12,9 @@ export default {
   name: "download",
   props: {
     href: String
+  },
+  created(){
+    this.$hideLoading();
   }
 };
 </script>
