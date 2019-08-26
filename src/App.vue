@@ -41,10 +41,10 @@ export default {
       let urlParamsStrs = urlParasm.length == 1 ? urlParasm[0] : urlParasm[1];
       let action = sessionStorage.getItem("action") || "";
       this.params = this.parser(urlParamsStrs);
-      if (action !== "") {
-        this.action = action;
-        return false;
-      }
+      // if (action !== "") {
+      //   this.action = action;
+      //   return false;
+      // }
       if (this.params.showType === "ACTOR_DETAILS") {
         this.action = "business";
       } else {

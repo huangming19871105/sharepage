@@ -3,67 +3,54 @@
     <div v-if="JSON.stringify(data) != '{}' && init">
       <div class="p-head-media">
         <div class="h-media">
-          <i class="m-icon m-icon-play" @click="videoPlay"></i>
-          <video ref="v">
-            <source src="../assets/movie.mp4" type="video/mp4" />
+          <i class="m-icon m-icon-play" @click="videoPlay" v-if="bannerAction == 'video' && data.videoUrl"></i>
+          <video :src="data.videoUrl" x5-video-player-type="h5" ref="v" v-if="bannerAction == 'video' && data.videoUrl" :poster="data.previewImageUrl">
           </video>
-          <!-- <video autoplay controls><source src="../assets/movie.mp4"  type="video/mp4"></video> -->
+          <img v-if="bannerAction == 'image' && data.icon" :src="data.icon" />
         </div>
         <div class="h-tags">
-          <span class="m-tag m-tag-danger">
+          <span class="m-tag" :class="{'m-tag-danger': bannerAction == 'video'}" @click="changeBannerAction('video')">
             <i class="m-icon m-icon-triangle-right"></i>视频
           </span>
-          <span class="m-tag">图片</span>
+          <span class="m-tag" :class="{'m-tag-danger': bannerAction == 'image'}" @click="changeBannerAction('image')">图片</span>
         </div>
       </div>
       <div class="p-section">
-        <div class="t-head-t">鱼丝通透运动织带</div>
-        <div class="t-head-b">
-          <ul class="m-table-lists">
-            <li class="m-table-item">
-              <div class="m-table-label">展馆号：</div>
-              <div>6.2号馆</div>
-            </li>
-            <li class="m-table-item">
-              <div>展馆号：</div>
-              <div>6.2号馆</div>
-            </li>
-          </ul>
-        </div>
-        <div class="t-head-tag">
+        <div class="t-head-t">{{data.pdtName || ''}}</div>
+        <div class="t-head-tag" v-if="data.pdtBrand">
           <i class="m-icon m-icon-R"></i>
-          <span>金秋绳带</span>
+          <span>{{data.pdtBrand}}</span>
         </div>
-        <div class="t-head-f">
-          <span class="m-tag m-tag-d m-tag-radius-m">人气：423</span>
+        <div class="t-head-f" v-if="data.productPv">
+          <span class="m-tag m-tag-d m-tag-radius-m">人气：{{data.productPv}}</span>
         </div>
       </div>
       <div class="p-section m-m15">
         <ul class="m-table-lists">
           <li class="m-table-item">
             <label class="m-table-label m-minWidth170">展品类型：</label>
-            <div class="m-table-body">辅料</div>
+            <div class="m-table-body">{{data.pdtKey || '暂无'}}</div>
           </li>
           <li class="m-table-item">
             <label class="m-table-label m-minWidth170">展品标识：</label>
-            <div class="m-table-body">爆款</div>
+            <div class="m-table-body">{{data.productIdentification || '暂无'}}</div>
           </li>
           <li class="m-table-item">
             <label class="m-table-label m-minWidth170">定制服务：</label>
-            <div class="m-table-body">是</div>
+            <div class="m-table-body">{{data.customizationServices ? "是" : "否"}}</div>
           </li>
           <li class="m-table-item">
             <label class="m-table-label m-minWidth170">最小订货量：</label>
-            <div class="m-table-body">100</div>
+            <div class="m-table-body">{{data.minOrderQuantity || 0}}</div>
           </li>
           <li class="m-table-item">
             <label class="m-table-label m-minWidth170">是否有现货：</label>
-            <div class="m-table-body">有</div>
+            <div class="m-table-body">{{data.spotTrading ? '有' : "没有"}}</div>
           </li>
         </ul>
       </div>
-      <div class="p-section m-m15 p-section-content">
-        <p>通透运动款织带，材质原料成分：高F尼龙 渔丝 氨纶 功能特色：透气防滑，柔软舒适，鱼丝光泽。适用于运动系列服饰。</p>
+      <div class="p-section m-m15 p-section-content" v-if="data.pdtIntro">
+        <p>{{data.pdtIntro}}</p>
       </div>
       <button-link v-on="$listeners"></button-link>
     </div>
@@ -84,6 +71,7 @@ export default {
   data() {
     return {
       init: false,
+      bannerAction: 'video',
       data: {}
     };
   },
@@ -92,19 +80,32 @@ export default {
     ErrorCode
   },
   created() {
-    console.log(this.params);
     publicProductDetail(this.params)
       .then(res => {
-        console.log(res);
+        if(res.code === 1000) {
+          this.data = res.data || {};
+          this.data.pdtName && this.$setTitle(this.data.pdtName)
+        }
       })
       .finally(() => {
         this.init = true;
         this.$hideLoading();
       });
   },
+  mounted() {
+    // this.$refs.v.onpause = function() {
+    //   alert("sfdsf")
+    // }
+    this.$nextTick(()=>{
+      console.log(this.$refs)
+    });
+  },
   methods: {
     videoPlay() {
       this.$refs.v.play();
+    },
+    changeBannerAction(actioin) {
+      this.bannerAction = actioin;
     }
   }
 };
@@ -121,6 +122,8 @@ export default {
   height: 748px;
   background: #f0f0f0 url("../assets/img-defualt.png") no-repeat center;
   background-size: 40% auto;
+  z-index: 10;
+  overflow: hidden;
 }
 .h-media img,
 .h-media video {
@@ -144,6 +147,7 @@ export default {
   bottom: 20px;
   height: 40px;
   transform: translateX(-50%);
+  z-index: 100;
 }
 .h-tags .m-tag {
   margin: 0 20px;

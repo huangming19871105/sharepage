@@ -8,9 +8,9 @@
         <div class="t-head-t">{{data.actorRes.atrName}}</div>
         <div class="t-head-b">
           <ul class="m-table-lists">
-            <li class="m-table-item">
+            <li class="m-table-item" v-if="data.actorRes.pavilionCode">
               <div class="m-table-label">展馆号：</div>
-              <div>6.2号馆</div>
+              <div>{{data.actorRes.pavilionCode}}</div>
             </li>
             <li class="m-table-item" v-if="data.actorRes.bthCode">
               <div>展位号：</div>
@@ -21,8 +21,8 @@
             <img :src="data.actorRes.atrLogo" />
           </div>
         </div>
-        <div class="t-head-f">
-          <span class="m-tag m-tag-d m-tag-radius-m">关注度：423</span>
+        <div class="t-head-f" v-if="data.actorRes.actorPv">
+          <span class="m-tag m-tag-d m-tag-radius-m">关注度：{{data.actorRes.actorPv}}</span>
         </div>
       </div>
       <div class="p-section m-m15">
@@ -64,15 +64,15 @@
             <ul class="m-table-lists">
               <li class="m-table-item">
                 <label class="m-table-label m-minWidth170">公司名称：</label>
-                <div class="m-table-body">江苏金秋绳带科技有限公司</div>
+                <div class="m-table-body">{{data.details.atrName || "暂无"}}</div>
               </li>
               <li class="m-table-item">
                 <label class="m-table-label m-minWidth170">展位号：</label>
-                <div class="m-table-body">6.2-C102</div>
+                <div class="m-table-body">{{data.details.bthCode || "暂无"}}</div>
               </li>
               <li class="m-table-item">
                 <label class="m-table-label m-minWidth170">公司地区：</label>
-                <div class="m-table-body">南通市港闸区集美路398号</div>
+                <div class="m-table-body">{{data.details.atrAddress || "暂无"}}</div>
               </li>
               <li class="m-table-item">
                 <label class="m-table-label m-minWidth170">公司性质：</label>
@@ -82,7 +82,7 @@
                 <label class="m-table-label m-minWidth170">公司介绍：</label>
                 <div
                   class="m-table-body"
-                >江苏金秋弹性织物有限公司是一家专业生产中高档内衣氨纶肩带、围带、包边带、电脑提花提字带、花边及其他带类产品的大型纺织制造商。 公司总投资1.2亿元，拥有进口瑞士、法国、意大利、德国及港台地区的世界先进织造生产设备，从染整、织造到测试、包装全面实现自动化和规范化。 公司致力于品质提高与环境保护，先后通过了ISO9001质量体系认证、ISO14000环境质量体系认证及瑞士生态纺织Oeko-Tex Standard 100一级国际认证。</div>
+                >{{data.details.atrIntro || "暂无"}}</div>
               </li>
               <li class="m-table-item">
                 <label class="m-table-label m-minWidth170">主营项目：</label>
@@ -91,12 +91,12 @@
               <li class="m-table-item">
                 <label class="m-table-label m-minWidth170">客服电话：</label>
                 <div class="m-table-body m-red">
-                  <a href="tel:0513-85562222">0513-85562222</a>
+                  <a :href="'tel:' + data.details.atrTel">{{data.details.atrTel || "暂无"}}</a>
                 </div>
               </li>
               <li class="m-table-item">
                 <label class="m-table-label m-minWidth170">邮箱：</label>
-                <div class="m-table-body m-red">dcy@jqelastic.com</div>
+                <div class="m-table-body m-red">{{data.details.atrEmail || "暂无"}}</div>
               </li>
             </ul>
           </div>
@@ -124,7 +124,7 @@
               </li>
             </ul>
           </div>
-          <goods-item v-if="tabActive === 2"></goods-item>
+          <goods-item v-show="tabActive === 2" :datas="data.products"></goods-item>
         </div>
       </div>
       <button-link v-on="$listeners"></button-link>
@@ -158,25 +158,17 @@ export default {
   },
   created() {
     publicActorDetail(this.params)
-      .then(res => {
-        if (res.code === 1000) {
-          var data = {
-            actorRes: {
-              atrName: "南通依梭纺织有限公司",
-              bthCode: "7.1-J66",
-              atrLogo:
-                "http://img.eastfair.com/app/sial/21dc7525e68d4e7980978a650a4ba70b/avatar/20190813152103_1459.jpg"
-            }
-          };
-          this.data = data;
-          this.$setTitle(this.data.actorRes.atrName)
-        }
-      })
-      .catch(e => {})
-      .finally(() => {
-        this.init = true;
-        this.$hideLoading();
-      });
+    .then(res => {
+      if (res.code === 1000) {
+        this.data = res.data;
+        this.$setTitle(this.data.actorRes.atrName)
+      }
+    })
+    .catch(e => {})
+    .finally(() => {
+      this.init = true;
+      this.$hideLoading();
+    });
   },
   methods: {
     tabChange(e) {

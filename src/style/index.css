@@ -117,6 +117,7 @@ dd {
     width: 100%;
     max-width: 540PX;
     transform: translateX(-50%);
+    z-index: 500;
 }
 
 .t-head-t {
@@ -208,6 +209,7 @@ dd {
 }
 
 .m-icon {
+    position: relative;
     display: inline-block;
     margin-right: 10px;
     vertical-align: middle;
@@ -215,11 +217,22 @@ dd {
     background-size: 229px auto;
 }
 
-.m-icon-triangle-right {
-    width: 16px;
-    height: 18px;
-    background-position: -136px 0;
-    vertical-align: 1px;
+.m-icon-triangle-right::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    margin-left: -12px;
+    margin-top: -8px;
+    width: 0;
+    height: 0;
+    border-width: 6px 12px;
+    border-style: solid;
+    border-color: transparent transparent transparent #e50038;
+    line-height: 0;
+}
+
+.m-tag-danger .m-icon-triangle-right::before{
+    border-color: transparent transparent transparent #fff;
 }
 
 .m-icon-play {
@@ -385,6 +398,10 @@ dd {
     transform: scale(0.5);
     pointer-events: none;
     z-index: 100;
+}
+
+.m-obj-lists {
+    overflow: hidden;
 }
 
 .m-obj-lists .m-item-media {
