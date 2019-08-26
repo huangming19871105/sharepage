@@ -19,14 +19,20 @@ class AjaxRequest {
     // 设置拦截器
     instance.interceptors.request.use((config) => {
       return config;
-    }, err => Promise.reject(err));
+    }, (err) => {
+      return Promise.reject(err);
+    });
     // 设置响应拦截器
     instance.interceptors.response.use((res) => {
       if(res.data.code !== 1000) {
         V.$text(res.data.message)
+        V.$errorText(res.data.message)
       }
       return res.data;
-    }, err => Promise.reject(err));
+    }, (err) => {
+      V.$errorText(err.message)
+      return Promise.reject(err);
+    });
 
     return instance(config);
   }

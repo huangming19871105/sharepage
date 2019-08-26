@@ -9,7 +9,7 @@ export default {
   name: "error",
   props: {
     errorText: {
-      default: '接口请求错误, 请重新刷新页面',
+      default: sessionStorage.getItem("errorMessage") + ", 请重新刷新页面",
       type: String
     }
   },
