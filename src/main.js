@@ -49,6 +49,10 @@ Vue.prototype.$text = function (str, second = 1700) {
   textEl.setAttribute("t", t)
 }
 
+Vue.prototype.$setTitle = function(title) {
+  document.title = title;
+}
+
 Vue.config.productionTip = false
 
 new Vue({

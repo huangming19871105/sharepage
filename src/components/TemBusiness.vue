@@ -169,6 +169,7 @@ export default {
             }
           };
           this.data = data;
+          this.$setTitle(this.data.actorRes.atrName)
         }
       })
       .catch(e => {})
