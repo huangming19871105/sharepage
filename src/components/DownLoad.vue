@@ -2,7 +2,7 @@
   <div class="p-download">
     <div class="p-content"></div>
     <div class="p-foot">
-      <a :href="href" class="btn-download">立即下载</a>
+      <a :href="href" class="btn-download" @click="downLoad">立即下载</a>
     </div>
   </div>
 </template>
@@ -15,6 +15,14 @@ export default {
   },
   created(){
     this.$hideLoading();
+  },
+  beforeDestroy() {
+    this.$hideLoading();
+  },
+  methods: {
+    downLoad() {
+      this.$showLoading();
+    }
   }
 };
 </script>
