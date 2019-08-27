@@ -107,13 +107,12 @@ export default {
           this.data.pdtName && this.$setTitle(this.data.pdtName);
         }
       })
-      .catch((e) => {})
+      .catch(e => {})
       .finally(() => {
         this.init = true;
         this.$hideLoading();
       });
   },
-  mounted() {},
   methods: {
     videoPlay() {
       if (!this.videoStauts) {

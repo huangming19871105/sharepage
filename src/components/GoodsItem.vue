@@ -1,7 +1,7 @@
 <template>
   <div class="m-tab-item">
     <ul class="m-obj-lists">
-      <li class="m-obj-item" v-for="(item) in datas" :key="item.actorId">
+      <li class="m-obj-item" v-for="(item,index) in datas" :key="index">
         <div class="m-item-media">
             <div class="m-item-img m-img-bg">
               <img :src="item.iconUrl" />

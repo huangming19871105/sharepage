@@ -1,6 +1,6 @@
 <template>
   <div class="p-wrap">
-    <div v-if="JSON.stringify(data) != '{}'">
+    <div v-if="!isFalse(data)">
       <div class="p-section p-head">
         <div class="p-head-title">{{data.actorRes.atrName}}</div>
       </div>
@@ -25,34 +25,46 @@
           <span class="m-tag m-tag-d m-tag-radius-m">关注度：{{data.actorRes.actorPv}}</span>
         </div>
       </div>
-      <div class="p-section m-m15">
+      <div
+        class="p-section m-m15"
+        v-if="!isFalse(data.actorRes.imUserName) || !isFalse(data.actorRes.atrVideoUrl)"
+      >
         <div class="m-outer">
           <div class="m-inner">
-            <div class="content">
-              <i class="m-icon m-icon-play"></i>
+            <div class="content" v-if="!isFalse(data.actorRes.atrVideoUrl)">
+              <i class="m-icon m-icon-play" @click="videoPlay" v-if="!videoStatus"></i>
+              <video ref="v" loop="loop" @click="videoPlay" src="../assets/movie.mp4"></video>
             </div>
-            <div class="content"></div>
-            <div class="content"></div>
-            <div class="content"></div>
-            <div class="content"></div>
+            <template v-if="!isFalse(data.actorRes.imUserName)">
+              <div
+                class="content"
+                v-for="(item, index) in data.actorRes.imUserName.split(',')"
+                :key="index"
+              >
+                <img :src="item" />
+              </div>
+            </template>
           </div>
         </div>
       </div>
       <div class="m-m15 m-tab">
         <ul class="m-tab-menu">
           <li
+            v-if="!isFalse(data.details)"
             class="m-tab-menu-item"
             :class="{'menu-active': tabActive === 0}"
             @click="tabChange"
             id="tab0"
           >基本信息</li>
           <li
+            v-if="!isFalse(data.questionList)"
             class="m-tab-menu-item"
             :class="{'menu-active': tabActive === 1}"
             @click="tabChange"
             id="tab1"
           >展商标签</li>
           <li
+            v-if="!isFalse(data.products)"
             class="m-tab-menu-item"
             :class="{'menu-active': tabActive === 2}"
             @click="tabChange"
@@ -75,18 +87,8 @@
                 <div class="m-table-body">{{data.details.atrAddress || "暂无"}}</div>
               </li>
               <li class="m-table-item">
-                <label class="m-table-label m-minWidth170">公司性质：</label>
-                <div class="m-table-body">制造商</div>
-              </li>
-              <li class="m-table-item">
                 <label class="m-table-label m-minWidth170">公司介绍：</label>
-                <div
-                  class="m-table-body"
-                >{{data.details.atrIntro || "暂无"}}</div>
-              </li>
-              <li class="m-table-item">
-                <label class="m-table-label m-minWidth170">主营项目：</label>
-                <div class="m-table-body">带</div>
+                <div class="m-table-body">{{data.details.atrIntro || "暂无"}}</div>
               </li>
               <li class="m-table-item">
                 <label class="m-table-label m-minWidth170">客服电话：</label>
@@ -102,25 +104,16 @@
           </div>
           <div class="m-tab-item" v-if="tabActive === 1">
             <ul class="m-table-lists">
-              <li class="m-table-item">
-                <label class="m-table-label m-minWidth170">产品品类：</label>
+              <li class="m-table-item" v-for="(item) in data.questionList" :Key="item.id">
+                <label class="m-table-label m-maxWidth170">{{item.aliasName}}</label>
+                <span class="icon-fh">：</span>
                 <div class="m-table-body">
-                  <span class="m-tag m-tag-default m-tag-radius-m">男童卫衣</span>
-                  <span class="m-tag m-tag-default m-tag-radius-m">男童外套</span>
+                  <span
+                    class="m-tag m-tag-default m-tag-radius-m"
+                    v-for="(item2, index) in item.answerList"
+                    :key="index"
+                  >{{item2.aliasName}}</span>
                 </div>
-              </li>
-              <li class="m-table-item">
-                <label class="m-table-label m-minWidth170">商贸需求：</label>
-                <div class="m-table-body">
-                  <span class="m-tag m-tag-default m-tag-radius-m">采购男装</span>
-                  <span class="m-tag m-tag-default m-tag-radius-m">男童外套</span>
-                  <span class="m-tag m-tag-default m-tag-radius-m">男童外套</span>
-                  <span class="m-tag m-tag-default m-tag-radius-m">男童外套</span>
-                </div>
-              </li>
-              <li class="m-table-item">
-                <label class="m-table-label m-minWidth170">优惠政策：</label>
-                <div class="m-table-body">大量采购，有优惠代理政策。也可签订长期战略合作协议</div>
               </li>
             </ul>
           </div>
@@ -152,23 +145,24 @@ export default {
   data() {
     return {
       init: false,
+      videoStatus: false,
       tabActive: 0,
       data: {}
     };
   },
   created() {
     publicActorDetail(this.params)
-    .then(res => {
-      if (res.code === 1000) {
-        this.data = res.data;
-        this.$setTitle(this.data.actorRes.atrName)
-      }
-    })
-    .catch(e => {})
-    .finally(() => {
-      this.init = true;
-      this.$hideLoading();
-    });
+      .then(res => {
+        if (res.code === 1000) {
+          this.data = res.data;
+          this.$setTitle(this.data.actorRes.atrName);
+        }
+      })
+      .catch(e => {})
+      .finally(() => {
+        this.init = true;
+        this.$hideLoading();
+      });
   },
   methods: {
     tabChange(e) {
@@ -177,6 +171,20 @@ export default {
       k = parseInt(k);
       if (this.tabActive === k) return;
       this.tabActive = k;
+    },
+    isFalse(s) {
+      if (!s) return true;
+      if (s.constructor == Array && s.length == 0) return true;
+      if (s.constructor == Object && JSON.stringify(s) === "{}") return true;
+      return false;
+    },
+    videoPlay() {
+      if (!this.videoStauts) {
+        this.$refs.v.play();
+      } else {
+        this.$refs.v.pause();
+      }
+      this.videoStauts = !this.videoStauts;
     }
   }
 };
