@@ -7,7 +7,7 @@ const V = new Vue();
 
 class AjaxRequest {
   constructor() {
-    this.baseURL = process.env.NODE_ENV === 'development' ? 'http://10.20.16.47:9002/visitor/v1' : '/';
+    this.baseURL = process.env.NODE_ENV === 'development' ? 'http://10.20.16.47:9002/visitor/v1' : 'http://10.20.16.47:9002/visitor/v1';
     this.timeout = 2000;
   }
 
