@@ -107,6 +107,7 @@ export default {
           this.data.pdtName && this.$setTitle(this.data.pdtName);
         }
       })
+      .catch((e) => {})
       .finally(() => {
         this.init = true;
         this.$hideLoading();

@@ -53,6 +53,18 @@ Vue.prototype.$setTitle = function(title) {
   document.title = title;
 }
 
+Vue.prototype.$errorText = function(errtext='接口请求错误',errorCode) {
+  var text = "";
+  if(errtext.indexOf("timeout of") > -1){
+    text = "接口请求超时";
+  } else if(errtext.toLowerCase().indexOf('Network Error')){
+    text = "网络错误";
+  } else {
+    text = errtext;
+  }
+  sessionStorage.setItem("errorMessage", text);
+}
+
 Vue.config.productionTip = false
 
 new Vue({
