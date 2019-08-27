@@ -33,7 +33,7 @@
           <div class="m-inner">
             <div class="content" v-if="!isFalse(data.actorRes.atrVideoUrl)">
               <i class="m-icon m-icon-play" @click="videoPlay" v-if="!videoStatus"></i>
-              <video ref="v" loop="loop" @click="videoPlay" src="../assets/movie.mp4"></video>
+              <video ref="v" loop="loop" @click="videoPlay" :src="data.actorRes.atrVideoUrl" :poster="data.actorRes.previewImageUrl"></video>
             </div>
             <template v-if="!isFalse(data.actorRes.imUserName)">
               <div
