@@ -3,16 +3,35 @@
     <div v-if="JSON.stringify(data) != '{}' && init">
       <div class="p-head-media">
         <div class="h-media">
-          <i class="m-icon m-icon-play" @click="videoPlay" v-if="bannerAction == 'video' && data.videoUrl"></i>
-          <video :src="data.videoUrl" x5-video-player-type="h5" ref="v" v-if="bannerAction == 'video' && data.videoUrl" :poster="data.previewImageUrl">
-          </video>
+          <i
+            class="m-icon m-icon-play"
+            @click="videoPlay"
+            v-if="bannerAction == 'video' && data.videoUrl && !videoStauts"
+          ></i>
+          <video
+            @click="videoPlay"
+            loop="loop"
+            :src="data.videoUrl"
+            x5-video-player-type="h5"
+            ref="v"
+            v-if="bannerAction == 'video' && data.videoUrl"
+            :poster="data.previewImageUrl"
+          ></video>
           <img v-if="bannerAction == 'image' && data.icon" :src="data.icon" />
         </div>
         <div class="h-tags">
-          <span class="m-tag" :class="{'m-tag-danger': bannerAction == 'video'}" @click="changeBannerAction('video')">
+          <span
+            class="m-tag"
+            :class="{'m-tag-danger': bannerAction == 'video'}"
+            @click="changeBannerAction('video')"
+          >
             <i class="m-icon m-icon-triangle-right"></i>视频
           </span>
-          <span class="m-tag" :class="{'m-tag-danger': bannerAction == 'image'}" @click="changeBannerAction('image')">图片</span>
+          <span
+            class="m-tag"
+            :class="{'m-tag-danger': bannerAction == 'image'}"
+            @click="changeBannerAction('image')"
+          >图片</span>
         </div>
       </div>
       <div class="p-section">
@@ -70,8 +89,9 @@ export default {
   },
   data() {
     return {
+      videoStauts: false,
       init: false,
-      bannerAction: 'video',
+      bannerAction: "video",
       data: {}
     };
   },
@@ -82,9 +102,9 @@ export default {
   created() {
     publicProductDetail(this.params)
       .then(res => {
-        if(res.code === 1000) {
+        if (res.code === 1000) {
           this.data = res.data || {};
-          this.data.pdtName && this.$setTitle(this.data.pdtName)
+          this.data.pdtName && this.$setTitle(this.data.pdtName);
         }
       })
       .finally(() => {
@@ -92,17 +112,15 @@ export default {
         this.$hideLoading();
       });
   },
-  mounted() {
-    // this.$refs.v.onpause = function() {
-    //   alert("sfdsf")
-    // }
-    this.$nextTick(()=>{
-      console.log(this.$refs)
-    });
-  },
+  mounted() {},
   methods: {
     videoPlay() {
-      this.$refs.v.play();
+      if (!this.videoStauts) {
+        this.$refs.v.play();
+      } else {
+        this.$refs.v.pause();
+      }
+      this.videoStauts = !this.videoStauts;
     },
     changeBannerAction(actioin) {
       this.bannerAction = actioin;

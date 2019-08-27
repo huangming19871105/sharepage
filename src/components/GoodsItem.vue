@@ -12,24 +12,6 @@
             <div class="m-item-foot">{{item.pdtIntro}}</div>
         </div>
       </li>
-      <!-- <li class="m-obj-item">
-        <div class="m-item-media">
-            <div class="m-item-img m-img-bg"></div>
-        </div>
-        <div class="m-item-body">
-            <div class="m-item-head">鱼丝镂空运动带</div>
-            <div class="m-item-foot">江苏金秋绳带科技有限公司</div>
-        </div>
-      </li>
-      <li class="m-obj-item">
-        <div class="m-item-media">
-            <div class="m-item-img m-img-bg"></div>
-        </div>
-        <div class="m-item-body">
-            <div class="m-item-head">鱼丝镂空运动带</div>
-            <div class="m-item-foot">江苏金秋绳带科技有限公司</div>
-        </div>
-      </li> -->
     </ul>
   </div>
 </template>
