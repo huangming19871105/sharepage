@@ -1,7 +1,7 @@
 <template>
   <div class="p-wrap">
     <div v-if="JSON.stringify(data) != '{}' && init">
-      <div class="p-head-media">
+      <div class="p-head-media" v-if="data.videoUrl || data.icon">
         <div class="h-media">
           <i
             class="m-icon m-icon-play"
@@ -24,6 +24,7 @@
             class="m-tag"
             :class="{'m-tag-danger': bannerAction == 'video'}"
             @click="changeBannerAction('video')"
+            v-if="data.videoUrl && data.icon"
           >
             <i class="m-icon m-icon-triangle-right"></i>视频
           </span>
@@ -31,6 +32,7 @@
             class="m-tag"
             :class="{'m-tag-danger': bannerAction == 'image'}"
             @click="changeBannerAction('image')"
+            v-if="data.videoUrl && data.icon"
           >图片</span>
         </div>
       </div>
@@ -105,6 +107,9 @@ export default {
         if (res.code === 1000) {
           this.data = res.data || {};
           this.data.pdtName && this.$setTitle(this.data.pdtName);
+          if(this.data.videoUrl == "") {
+            this.bannerAction = "image"
+          }
         }
       })
       .catch(e => {})

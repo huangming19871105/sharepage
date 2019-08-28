@@ -108,11 +108,14 @@
                 <label class="m-table-label m-maxWidth170">{{item.aliasName}}</label>
                 <span class="icon-fh">：</span>
                 <div class="m-table-body">
-                  <span
-                    class="m-tag m-tag-default m-tag-radius-m"
-                    v-for="(item2, index) in item.answerList"
-                    :key="index"
-                  >{{item2.aliasName}}</span>
+                  <template v-for="(item2, index) in item.answerList">
+                      <span
+                      class="m-tag m-tag-default m-tag-radius-m"
+                      :key="index"
+                      v-if="item2.aliasName != ''"
+                    >{{item2.aliasName}}</span>
+                  </template>
+                  
                 </div>
               </li>
             </ul>
