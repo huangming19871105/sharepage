@@ -17,7 +17,7 @@
             v-if="bannerAction == 'video' && data.videoUrl"
             :poster="data.previewImageUrl"
           ></video>
-          <img v-if="bannerAction == 'image' && data.icon" :src="data.icon" />
+          <img v-if="bannerAction == 'image' && data.icon" :src="data.icon.split(',')[0]" />
         </div>
         <div class="h-tags">
           <span

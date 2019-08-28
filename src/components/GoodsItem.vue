@@ -26,7 +26,9 @@ export default {
     }
   },
   created() {
-    this.datas.length = 4;
+    if(this.datas.length > 4) {
+      this.datas.length = 4;
+    }
   }
 };
 </script>
