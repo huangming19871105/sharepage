@@ -112,7 +112,7 @@ export default {
           }
         }
       })
-      .catch(e => {})
+      .catch(() => {})
       .finally(() => {
         this.init = true;
         this.$hideLoading();

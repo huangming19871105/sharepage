@@ -21,7 +21,7 @@ export default {
   name: "goodsItem",
   props: {
     datas: {
-      default: [],
+      default: ()=>[],
       type: Array
     }
   },

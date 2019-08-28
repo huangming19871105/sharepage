@@ -161,7 +161,7 @@ export default {
           this.$setTitle(this.data.actorRes.atrName);
         }
       })
-      .catch(e => {})
+      .catch(() => {})
       .finally(() => {
         this.init = true;
         this.$hideLoading();
