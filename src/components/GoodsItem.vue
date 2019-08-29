@@ -1,6 +1,6 @@
 <template>
   <div class="m-tab-item">
-    <ul class="m-obj-lists">
+    <ul class="m-obj-lists" v-if="!$parent.isFalse(datas)">
       <li class="m-obj-item" v-for="(item,index) in datas" :key="index">
         <div class="m-item-media">
             <div class="m-item-img m-img-bg">
@@ -13,6 +13,7 @@
         </div>
       </li>
     </ul>
+    <div v-else class="m-empty m-empty-text">暂无展商产品</div>
   </div>
 </template>
 
@@ -29,7 +30,7 @@ export default {
     if(this.datas.length > 4) {
       this.datas.length = 4;
     }
-  }
+  },
 };
 </script>
 

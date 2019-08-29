@@ -50,21 +50,18 @@
       <div class="m-m15 m-tab">
         <ul class="m-tab-menu">
           <li
-            v-if="!isFalse(data.details)"
             class="m-tab-menu-item"
             :class="{'menu-active': tabActive === 0}"
             @click="tabChange"
             id="tab0"
           >基本信息</li>
           <li
-            v-if="!isFalse(data.questionList)"
             class="m-tab-menu-item"
             :class="{'menu-active': tabActive === 1}"
             @click="tabChange"
             id="tab1"
           >展商标签</li>
           <li
-            v-if="!isFalse(data.products)"
             class="m-tab-menu-item"
             :class="{'menu-active': tabActive === 2}"
             @click="tabChange"
@@ -103,7 +100,7 @@
             </ul>
           </div>
           <div class="m-tab-item" v-if="tabActive === 1">
-            <ul class="m-table-lists">
+            <ul class="m-table-lists" v-if="!isFalse(data.questionList)">
               <li class="m-table-item" v-for="(item) in data.questionList" :Key="item.id">
                 <label class="m-table-label m-maxWidth170">{{item.aliasName}}</label>
                 <span class="icon-fh">：</span>
@@ -119,6 +116,7 @@
                 </div>
               </li>
             </ul>
+            <div v-else class="m-empty m-empty-text">暂无展商标签</div>
           </div>
           <goods-item v-show="tabActive === 2" :datas="data.products"></goods-item>
         </div>

@@ -489,6 +489,17 @@ dd {
     font-size: 26px;
 }
 
+.m-empty{
+    padding: 30px;
+    text-align: center;
+}
+
+.m-empty-text{
+    padding: 60px 30px;
+    color: #666;
+    font-size: 26px;
+}
+
 
 @media (min-width: 540PX) {
     html {
