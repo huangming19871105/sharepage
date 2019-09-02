@@ -35,10 +35,10 @@
               <i class="m-icon m-icon-play" @click="videoPlay" v-if="!videoStatus"></i>
               <video ref="v" loop="loop" @click="videoPlay" :src="data.actorRes.atrVideoUrl" :poster="data.actorRes.previewImageUrl"></video>
             </div>
-            <template v-if="!isFalse(data.actorRes.imUserName)">
+            <template v-if="!isFalse(data.actorRes.atrImageUrl)">
               <div
                 class="content"
-                v-for="(item, index) in data.actorRes.imUserName.split(',')"
+                v-for="(item, index) in data.actorRes.atrImageUrl.split(',')"
                 :key="index"
               >
                 <img :src="item" />
@@ -180,12 +180,13 @@ export default {
       return false;
     },
     videoPlay() {
-      if (!this.videoStauts) {
+      if (!this.videoStatus) {
         this.$refs.v.play();
+        this.videoStatus = true;
       } else {
         this.$refs.v.pause();
+        this.videoStatus = false;
       }
-      this.videoStauts = !this.videoStauts;
     }
   }
 };

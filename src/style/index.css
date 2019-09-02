@@ -335,7 +335,7 @@ dd {
 .m-inner .content>video {
     width: 100%;
     height: 100%;
-    object-fit: fill;
+    object-fit: contain;
 }
 
 .m-inner .content:last-of-type {
