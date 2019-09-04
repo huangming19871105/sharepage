@@ -107,7 +107,7 @@ export default {
         if (res.code === 1000) {
           this.data = res.data || {};
           this.data.pdtName && this.$setTitle(this.data.pdtName);
-          if(this.data.videoUrl == "") {
+          if(!this.data.videoUrl) {
             this.bannerAction = "image"
           }
         }

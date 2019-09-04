@@ -17,7 +17,7 @@
               <div>{{data.actorRes.bthCode}}</div>
             </li>
           </ul>
-          <div class="t-obj-head m-img-bg">
+          <div class="t-obj-head m-img-bg" v-if="data.actorRes.atrLogo">
             <img :src="data.actorRes.atrLogo" />
           </div>
         </div>
