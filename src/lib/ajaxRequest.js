@@ -2,12 +2,16 @@ import Vue from 'vue'
 import axios from 'axios';
 
 const V = new Vue();
+const URL = {
+  development: 'http://10.20.16.47:9002/visitor/v1',
+  production: 'http://115.28.80.201:9002/visitor/v1'
+}
 
 // 每个请求的拦截器方法可能不一样
 
 class AjaxRequest {
   constructor() {
-    this.baseURL = process.env.NODE_ENV === 'development' ? 'http://10.20.16.47:9002/visitor/v1' : 'http://115.28.80.201:9002/visitor/v1';
+    this.baseURL = process.env.NODE_ENV === 'development' ? URL.development : URL.production;
     this.timeout = 2000;
   }
 
